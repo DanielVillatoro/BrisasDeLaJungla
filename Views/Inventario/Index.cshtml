@@ -3,3 +3,54 @@
 }
 
 <h1>Inventario</h1>
+
+<p>Datos:</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Costura</th>
+            <th scope="col">Hebillas</th>
+            <th scope="col">Linea de seguridad</th>
+            <th scope="col">Linea de vida</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Mosquetero de acero</th>
+            <th scope="col">Mosquetero de aluminio</th>
+            <th scope="col">No.Equipo</th>
+            <th scope="col">Pechera ABC</th>
+            <th scope="col">Siguiente Mantenimiento</th>
+            <th scope="col">Ventral</th>
+        </tr>
+    </thead>
+    <tbody id="dataBody">
+    </tbody>
+</table>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script>
+    var settings = {
+        "url": "http://localhost:8080/api/equipos",
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        response = response[0];
+        var html = "";
+        for (var i = 0; i < response.length; i++) {
+            html += "<tr>";
+            html += "<td>" + response[i].Costura + "</td>";
+            html += "<td>" + response[i]["Hebilla y Ajustes"] + "</td>";
+            html += "<td>" + response[i]["Linea de Seguridad"] + "</td>";
+            html += "<td>" + response[i]["Linea de Vida"] + "</td>";
+            html += "<td>" + response[i]["Marca"] + "</td>";
+            html += "<td>" + response[i]["Mosquetero de Acero"] + "</td>";
+            html += "<td>" + response[i]["Mosquetero de Aluminio"] + "</td>";
+            html += "<td>" + response[i]["No.Equipo"] + "</td>";
+            html += "<td>" + response[i]["Pechera ABC"] + "</td>";
+            html += "<td>" + response[i]["Siguiente Mantenimiento"] + "</td>";
+            html += "<td>" + response[i]["Ventral"] + "</td>";
+            html += "</tr>";
+        }
+        $("#dataBody").html(html);
+    });
+</script>
