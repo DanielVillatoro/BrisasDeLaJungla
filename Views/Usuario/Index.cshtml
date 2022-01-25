@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "_Layout";
+}
+<h1>Usuarios</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Usuario:</label>
+            <input class="form-control" id="usuarioInput" placeholder="Usuario" />
+        </div>
+        <div class="col-md-4">
+            <label>Contraseña:</label>
+            <input class="form-control" id="contrasennaInput" placeholder="Contraseña" type="password"/>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary" onclick="guardarDatos()" style="margin-top:2rem">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const guardarDatos = () => {
+        var settings = {
+            "url": "http://localhost:8080/api/usuarios/agregar",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "nombre": $("#usuarioInput").val(),
+                "clave": $("#contrasennaInput").val(),
+            }
+        };
+        $.ajax(settings).done(function (response) {
+            alertify.success('Datos guardados correctamente.');
+            $("#usuarioInput").val('');
+            $("#contrasennaInput").val('');
+        });
+        alertify.success('Datos guardados correctamente.');
+        $("#usuarioInput").val('');
+        $("#contrasennaInput").val('');
+
+    }
+</script>

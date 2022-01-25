@@ -5,7 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BrisasDeLaJungla</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/buttons.print.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/CDNfiles/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/CDNfiles/dataTable/css/jquery.dataTables.min.css" />
+
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>*@
+
 </head>
 <body>
     <header>
@@ -24,6 +44,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Inventario" asp-action="Index">Inventario</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuario</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +64,7 @@
             &copy; 2021 - BrisasDeLaJungla
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

@@ -1,13 +1,75 @@
 ﻿@{
     Layout = "_Layout";
 }
-
 <h1>Inventario</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <label>Costura:</label>
+            <input class="form-control" id="costuraInput" placeholder="Costura" />
+        </div>
+        <div class="col-md-2">
+            <label>Hebillas:</label>
+            <input class="form-control" id="hebillaInput" placeholder="Hebilla" />
+        </div>
+        <div class="col-md-2">
+            <label>Linea de seguridad:</label>
+            <input class="form-control" id="lineaSeguridadInput" placeholder="Linea de seguridad" />
+        </div>
 
+        <div class="col-md-2">
+            <label>Linea de vida:</label>
+            <input class="form-control" id="lineaVidaInput" placeholder="Linea de vida" />
+        </div>
+        <div class="col-md-2">
+            <label>Marca:</label>
+            <input class="form-control" id="marcaInput" placeholder="Marca" />
+        </div>
+        <div class="col-md-2">
+            <label>Mosquetero de acero:</label>
+            <input class="form-control" id="mosqueteroAceroInput" placeholder="Mosquetero de acero" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>Mosquetero de aluminio:</label>
+            <input class="form-control" id="mosqueteroAluminioInput" placeholder="Mosquetero de aluminio" />
+        </div>
+        <div class="col-md-2">
+            <label>Pechera ABC:</label>
+            <input class="form-control" id="pecheraABCInput" placeholder="Pechera ABC" />
+        </div>
+        <div class="col-md-2">
+            <label>Ventral:</label>
+            <input class="form-control" id="ventralInput" placeholder="Ventral" />
+        </div>
+        <div class="col-md-2">
+            <label>Ajuste:</label>
+            <input class="form-control" id="ajusteInput" placeholder="Ajuste" />
+        </div>
+        <div class="col-md-3">
+            <label>Num Equipo:</label>
+            <input class="form-control" id="numEquipoInput" placeholder="Num Equipo" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary" onclick="guardarDatos()" style="margin-top:2rem">Guardar</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-success" onclick="guardarCambios()" style="margin-top:2rem">Guardar Cambios</button>
+        </div>
+        <div class="col-md-3 invisible">
+            <label>Siguiente Mantenimiento:</label>
+            <input class="form-control" id="siguienteMantenimientoInput" type="date" />
+        </div>
+    </div>
+</div>
 <p>Datos:</p>
-<table class="table table-hover">
+<table class="table table-hover table-responsive-sm" id="tblData">
     <thead>
         <tr>
+            <th scope="col">No.Equipo</th>
             <th scope="col">Costura</th>
             <th scope="col">Hebillas</th>
             <th scope="col">Linea de seguridad</th>
@@ -15,42 +77,206 @@
             <th scope="col">Marca</th>
             <th scope="col">Mosquetero de acero</th>
             <th scope="col">Mosquetero de aluminio</th>
-            <th scope="col">No.Equipo</th>
+
             <th scope="col">Pechera ABC</th>
             <th scope="col">Siguiente Mantenimiento</th>
             <th scope="col">Ventral</th>
+            <th scope="col">Acciones</th>
         </tr>
     </thead>
     <tbody id="dataBody">
     </tbody>
 </table>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script>
-    var settings = {
-        "url": "http://localhost:8080/api/equipos",
-        "method": "GET",
-        "timeout": 0,
-    };
 
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        response = response[0];
-        var html = "";
-        for (var i = 0; i < response.length; i++) {
-            html += "<tr>";
-            html += "<td>" + response[i].Costura + "</td>";
-            html += "<td>" + response[i]["Hebilla y Ajustes"] + "</td>";
-            html += "<td>" + response[i]["Linea de Seguridad"] + "</td>";
-            html += "<td>" + response[i]["Linea de Vida"] + "</td>";
-            html += "<td>" + response[i]["Marca"] + "</td>";
-            html += "<td>" + response[i]["Mosquetero de Acero"] + "</td>";
-            html += "<td>" + response[i]["Mosquetero de Aluminio"] + "</td>";
-            html += "<td>" + response[i]["No.Equipo"] + "</td>";
-            html += "<td>" + response[i]["Pechera ABC"] + "</td>";
-            html += "<td>" + response[i]["Siguiente Mantenimiento"] + "</td>";
-            html += "<td>" + response[i]["Ventral"] + "</td>";
-            html += "</tr>";
-        }
-        $("#dataBody").html(html);
-    });
+<script>
+    var idActualizar = 0;
+    const verData = () => {
+        var settings = {
+            "url": "http://localhost:8080/api/equipos",
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(settings).done(function (response) {
+            var html = "";
+            for (var i = 0; i < response.length; i++) {
+                html += "<tr>";
+                html += "<td>" + response[i]["id"] + "</td>";
+                html += "<td>" + response[i].costura + "</td>";
+                html += "<td>" + response[i]["hevillas"] + "</td>";
+                html += "<td>" + response[i]["lineaseguridad"] + "</td>";
+                html += "<td>" + response[i]["lineavida"] + "</td>";
+                html += "<td>" + response[i]["marca"] + "</td>";
+                html += "<td>" + response[i]["mosqueteroacero"] + "</td>";
+                html += "<td>" + response[i]["mosqueteroaluminio"] + "</td>";
+                html += "<td>" + response[i]["pechera"] + "</td>";
+                html += "<td>" + response[i]["fechaproximarevision"] + "</td>";
+                html += "<td>" + response[i]["ventral"] + "</td>";
+                html += "<td align='center'><button class='btn btn-primary' onclick='actualizarEquipo(" + response[i]["id"] + ")'>Seleccionar</button><button class='btn btn-danger' onclick='eliminarEquipo(" + response[i]["id"] + ")'>Eliminar</button></td>";
+                html += "</tr>";
+            }
+            $("#dataBody").html(html);
+
+            $('#tblData').DataTable({
+                destroy: true,
+                "pagingType": "full_numbers",
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                ],
+                order: [],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json",
+
+                    "buttons": {
+                        "copy": 'Copiar',
+                        "csv": 'Exportar a CSV'
+                    },
+                },
+
+            });
+        });
+    }
+
+    verData();
+    const guardarDatos = () => {
+        var settings = {
+            "url": "http://localhost:8080/api/equipos",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "numero": $("#numEquipoInput").val(),
+                "ajuste": $("#ajusteInput").val(),
+                "marca": $("#marcaInput").val(),
+                "costura": $("#costuraInput").val(),
+                "ventral": $("#ventralInput").val(),
+                "hevillas": $("#hebillaInput").val(),
+                "ajuste": $("#siguienteMantenimientoInput").val(),
+                "pechera": $("#pecheraABCInput").val(),
+                "lineavida": $("#lineaVidaInput").val(),
+                "lineaseguridad": $("#lineaSeguridadInput").val(),
+                "anno": $("#siguienteMantenimientoInput").val(),
+                "mosqueteroacero": $("#mosqueteroAceroInput").val(),
+                "mosqueteroaluminio": $("#mosqueteroAluminioInput").val(),
+                "idusuarioultimarevision": 1
+            }
+        };
+        $.ajax(settings).done(function (response) {
+            alertify.success('Datos guardados correctamente.');
+            $("#numEquipoInput").val('');
+            $("#ajusteInput").val('');
+            $("#marcaInput").val('');
+            $("#costuraInput").val('');
+            $("#ventralInput").val('');
+            $("#hebillaInput").val('');
+            $("#siguienteMantenimientoInput").val('');
+            $("#pecheraABCInput").val('');
+            $("#lineaVidaInput").val('');
+            $("#lineaSeguridadInput").val('');
+            $("#siguienteMantenimientoInput").val('');
+            $("#mosqueteroAceroInput").val('');
+            $("#mosqueteroAluminioInput").val('');
+            verData();
+        });
+    }
+
+
+    const guardarCambios = () => {
+        var settings = {
+            "url": "http://localhost:8080/api/equipos/editar",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "numero": $("#numEquipoInput").val(),
+                "ajuste": $("#ajusteInput").val(),
+                "marca": $("#marcaInput").val(),
+                "costura": $("#costuraInput").val(),
+                "ventral": $("#ventralInput").val(),
+                "hevillas": $("#hebillaInput").val(),
+                "ajuste": $("#siguienteMantenimientoInput").val(),
+                "pechera": $("#pecheraABCInput").val(),
+                "lineavida": $("#lineaVidaInput").val(),
+                "lineaseguridad": $("#lineaSeguridadInput").val(),
+                "anno": $("#siguienteMantenimientoInput").val(),
+                "mosqueteroacero": $("#mosqueteroAceroInput").val(),
+                "mosqueteroaluminio": $("#mosqueteroAluminioInput").val(),
+                "idusuarioultimarevision": 1,
+                "id":idActualizar
+            }
+        };
+        $.ajax(settings).done(function (response) {
+            alertify.success('Datos actualizados correctamente.');
+            $("#numEquipoInput").val('');
+            $("#ajusteInput").val('');
+            $("#marcaInput").val('');
+            $("#costuraInput").val('');
+            $("#ventralInput").val('');
+            $("#hebillaInput").val('');
+            $("#siguienteMantenimientoInput").val('');
+            $("#pecheraABCInput").val('');
+            $("#lineaVidaInput").val('');
+            $("#lineaSeguridadInput").val('');
+            $("#siguienteMantenimientoInput").val('');
+            $("#mosqueteroAceroInput").val('');
+            $("#mosqueteroAluminioInput").val('');
+            verData();
+        });
+
+
+    }
+
+    const eliminarEquipo = (num) => {
+        var settings = {
+            "url": "http://localhost:8080/api/equipos/eliminar",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "id": num
+            }
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            location.reload();
+        });
+
+    }
+
+    const actualizarEquipo = (num) => {
+        idActualizar = num;
+        var settings = {
+            "url": "http://localhost:8080/api/equipos/getId",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "id": num
+            }
+        };
+        $.ajax(settings).done(function (response) {
+            /*console.log(response);*/
+            $("#numEquipoInput").val(response[0].numero);
+            $("#ajusteInput").val(response[0].ajuste);
+            $("#marcaInput").val(response[0].marca);
+            $("#costuraInput").val(response[0].costura);
+            $("#ventralInput").val(response[0].ventral);
+            $("#hebillaInput").val(response[0].hevillas);
+            $("#siguienteMantenimientoInput").val(response[0].fechaproximarevision);
+            $("#pecheraABCInput").val(response[0].pechera);
+            $("#lineaVidaInput").val(response[0].lineavida);
+            $("#lineaSeguridadInput").val(response[0].lineaseguridad);
+            $("#mosqueteroAceroInput").val(response[0].mosqueteroacero);
+            $("#mosqueteroAluminioInput").val(response[0].mosqueteroaluminio);
+        });
+    }
 </script>
